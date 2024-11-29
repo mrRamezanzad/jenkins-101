@@ -1,39 +1,55 @@
+
+Jenkinsfile (Declarative Pipeline)
+
+/* Requires the Docker Pipeline plugin */
 pipeline {
-    agent { 
-        node {
-            label 'docker-agent-python'
-            }
-      }
-    triggers {
-        pollSCM '* * * * *'
-    }
+    agent { docker { image 'python:3.13.0-alpine3.20' } }
     stages {
-        stage('Build') {
+        stage('build') {
             steps {
-                echo "Building.."
-                sh '''
-                cd myapp
-                pip install -r requirements.txt
-                '''
-            }
-        }
-        stage('Test') {
-            steps {
-                echo "Testing.."
-                sh '''
-                cd myapp
-                python3 hello.py
-                python3 hello.py --name=Brad
-                '''
-            }
-        }
-        stage('Deliver') {
-            steps {
-                echo 'Deliver....'
-                sh '''
-                echo "doing delivery stuff.."
-                '''
+                sh 'python --version'
             }
         }
     }
 }
+
+
+// pipeline {
+//     agent { 
+//         node {
+//             label 'docker-agent-python'
+//             }
+//       }
+//     triggers {
+//         pollSCM '* * * * *'
+//     }
+//     stages {
+//         stage('Build') {
+//             steps {
+//                 echo "Building.."
+//                 sh '''
+//                 cd myapp
+//                 pip install -r requirements.txt
+//                 '''
+//             }
+//         }
+//         stage('Test') {
+//             steps {
+//                 echo "Testing.."
+//                 sh '''
+//                 cd myapp
+//                 python3 hello.py
+//                 python3 hello.py --name=Brad
+//                 '''
+//             }
+//         }
+//         stage('Deliver') {
+//             steps {
+//                 echo 'Deliver....'
+//                 sh '''
+//                 echo "doing delivery stuff.."
+//                 '''
+//             }
+//         }
+//     }
+// }
